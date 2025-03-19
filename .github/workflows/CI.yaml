@@ -1,14 +1,23 @@
 name: Run Newman Tests
-On:
-Workflow_dispatch:
+
+on: 
+  workflow_dispatch:  # Trigger manually via GitHub Actions UI
+
 jobs:
-run-tests:
-runs-on: ubuntu-latest
-steps:
-- uses: actions/checkout@v3.3.0
-- name: Install node
-uses: actions/setup-node@v3
-- name: Install newman
-run: npm install newman
-- name: Run tests
-run: newman run TestCollection.json -e NewmanTestEnviornment.json
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.3.0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18  # Specify Node.js version (adjust as needed)
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run tests
+        run: newman run TestCollection.json -e NewmanTestEnviornment.json
